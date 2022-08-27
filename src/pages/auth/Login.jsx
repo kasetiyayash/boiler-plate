@@ -1,10 +1,12 @@
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { Formik, Form, ErrorMessage } from "formik";
+// import { useDispatch } from "react-redux";
+import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
 const Login = () => {
   const navigate = useNavigate();
+  // const dispatch = useDispatch();
 
   return (
     <>
@@ -18,14 +20,15 @@ const Login = () => {
           password: Yup.string().required("Please enter your password"),
         })}
         onSubmit={(values) => {
-          const data = {
-            mail: values.email,
-            password: values.password,
-          };
-          alert(data);
+          console.log(values);
+          // dispatch({
+          //   email: values?.email,
+          //   password: values?.password,
+          // });
+          // navigate("/dashboard/home");
         }}
       >
-        {({ handleSubmit, setFieldValue }) => (
+        {({ handleSubmit }) => (
           <Form onSubmit={handleSubmit}>
             <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
               <div className="w-full p-6 m-auto bg-white border-t-4 border-purple-600 rounded-md shadow-md border-top lg:max-w-md">
@@ -35,11 +38,12 @@ const Login = () => {
                 <div className="mt-6">
                   <div>
                     <label className="block text-sm text-gray-800">Email</label>
-                    <input
+                    <Field
+                      as="input"
                       name="email"
+                      type="text"
                       className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                       placeholder="Enter your mail"
-                      onChange={(e) => setFieldValue(e.target.value)}
                     />
                     <ErrorMessage
                       name="email"
@@ -51,11 +55,12 @@ const Login = () => {
                     <label className="block text-sm text-gray-800">
                       Password
                     </label>
-                    <input
+                    <Field
+                      as="input"
                       name="password"
+                      type="text"
                       className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                       placeholder="Enter your password"
-                      onChange={(e) => setFieldValue(e.target.value)}
                     />
                     <ErrorMessage
                       name="password"
@@ -63,13 +68,10 @@ const Login = () => {
                       className="mt-1 text-xs text-red-500"
                     />
                   </div>
-                  <div className="mt-1">
-                    <Link
-                      to="#"
-                      className="text-xs text-gray-600 hover:underline"
-                    >
+                  <div className="mt-2">
+                    <p to="#" className="text-xs text-gray-600 hover:underline">
                       Forget Password?
-                    </Link>
+                    </p>
                   </div>
                   <div className="mt-6">
                     <button
@@ -82,12 +84,12 @@ const Login = () => {
                 </div>
                 <p className="flex justify-center mt-8 text-xs font-light text-gray-700">
                   Don't have an account?
-                  <p
-                    className="ml-1 font-medium text-purple-600 hover:underline"
+                  <span
+                    className="ml-1 font-medium text-purple-600 hover:underline cursor-pointer"
                     onClick={() => navigate("/auth/signup")}
                   >
                     Sign up
-                  </p>
+                  </span>
                 </p>
               </div>
             </div>
