@@ -6,8 +6,8 @@ import Home from "./Home";
 const DefaultRoute = () => {
   return (
     <Routes>
-      <Route index path="" element={<Home />} />
-      <Route path="home" element={<Dashboard />} />
+      <Route path="/dashboard" element={<Dashboard />} />
+      <Route index path="/home" element={<Home />} />
     </Routes>
   );
 };
