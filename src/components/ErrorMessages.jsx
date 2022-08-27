@@ -1,14 +1,14 @@
 import React from "react";
-// import ErrorMessage from "formik";
+import { ErrorMessage } from "formik";
 
 const ErrorMessages = ({ name }) => {
   return (
     <>
-      {/* <ErrorMessage
+      <ErrorMessage
         name={name}
         component="div"
         className="mt-1 text-xs text-red-500"
-      /> */}
+      />
     </>
   );
 };
