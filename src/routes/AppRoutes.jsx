@@ -20,11 +20,11 @@ const AppRoutes = () => {
   return (
     <Suspense fallback={<LazyloadLoader />}>
       <Routes>
-        <Route path="/" element={<AuthLayout />}>
-          <Route path="/auth/*" element={<AuthRoute />} />
+        <Route element={<AuthLayout />}>
+          <Route path="auth/*" element={<AuthRoute />} />
         </Route>
-        <Route path="/" element={<Protected />}>
-          <Route path="dashboard/*" element={<DefaultRoute />} />
+        <Route element={<Protected />}>
+          <Route path="/*" element={<DefaultRoute />} />
         </Route>
       </Routes>
     </Suspense>
