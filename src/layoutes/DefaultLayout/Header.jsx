@@ -1,8 +1,11 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const pathName = location.pathname;
 
   return (
     <nav className="bg-white py-2 md:py-4 shadow">
@@ -16,22 +19,34 @@ const Header = () => {
         >
           <div
             to="#"
-            className="p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
-            onClick={() => navigate("dashboard/dashboard")}
+            className={`${
+              pathName === "/dashboard/dashboard"
+                ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                : "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            }`}
+            onClick={() => navigate("/dashboard/dashboard")}
           >
             Dashboard
           </div>
           <div
             to="#"
-            className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
-            onClick={() => navigate("dashboard/home")}
+            className={`${
+              pathName === "/dashboard/home"
+                ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                : "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            } `}
+            onClick={() => navigate("/dashboard/home")}
           >
             Home
           </div>
           <div
             to="#"
-            className="p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
-            onClick={() => navigate("dashboard/blog")}
+            className={`${
+              pathName === "/dashboard/blog"
+                ? "p-2 lg:px-4 md:mx-2 text-white rounded bg-indigo-600"
+                : "p-2 lg:px-4 md:mx-2 text-gray-600 rounded hover:bg-gray-200 hover:text-gray-700 transition-colors duration-300"
+            } `}
+            onClick={() => navigate("/dashboard/blog")}
           >
             Blog
           </div>
