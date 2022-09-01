@@ -1,11 +1,32 @@
 import React, { Suspense } from "react";
 import { Route, Routes } from "react-router-dom";
-import LazyloadLoader from "../components/LazyloadLoader";
-import AuthLayout from "../layoutes/AuthLayout";
-import DefaultLayout from "../layoutes/DefaultLayout";
-import AuthRoute from "../pages/auth";
-import DefaultRoute from "../pages/default";
+import LazyLoader from "../components/LazyLoader";
+import AuthLayout from "../layout/AuthLayout";
+import DefaultLayout from "../layout/DefaultLayout";
 import ProtectedRoute from "./ProtectedRoute";
+import Login from "../pages/auth/Login";
+import SignUp from "../pages/auth/SignUp";
+import ForgetPassword from "../pages/auth/ForgetPassword";
+import Dashboard from "../pages/dashboard";
+
+const AuthRoute = () => {
+  return (
+    <Routes>
+      <Route index exact path="/login" element={<Login />} />
+      <Route exact path="/signup" element={<SignUp />} />
+      <Route exact path="/forget-password" element={<ForgetPassword />} />
+    </Routes>
+  );
+};
+
+const DefaultRoute = () => {
+  return (
+    <Routes>
+      <Route path="/dashboard" element={<Dashboard />} />
+    </Routes>
+  );
+};
+
 
 const AppRoutes = () => {
   const Protected = () => {
@@ -18,10 +39,10 @@ const AppRoutes = () => {
   };
 
   return (
-    <Suspense fallback={<LazyloadLoader />}>
+    <Suspense fallback={<LazyLoader />}>
       <Routes>
         <Route element={<AuthLayout />}>
-          <Route path="auth/*" element={<AuthRoute />} />
+          <Route path="/auth/*" element={<AuthRoute />} />
         </Route>
         <Route element={<Protected />}>
           <Route path="/*" element={<DefaultRoute />} />
