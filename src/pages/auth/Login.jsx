@@ -65,6 +65,7 @@ const Login = () => {
             password: Yup.string().required("Please enter password"),
           })}
           onSubmit={(values) => {
+            localStorage.setItem("access_token", values.email);
             console.log(values);
           }}
         >

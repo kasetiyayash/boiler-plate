@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     background: radial-gradient(#FFFFFF, #7DD3FC);
-    height: auto;
     width: 100vw;
+    height: auto;
     min-height: 100vh;
 }

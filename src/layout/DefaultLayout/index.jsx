@@ -6,11 +6,13 @@ import PageAnimation from "../../components/PageAnimation";
 
 const index = () => {
   return (
-    <div className="p-4">
+    <div className="p-2">
       <PageAnimation>
         <Header />
+        {/* <div className="min-h-[86vh]"> */}
         <Outlet />
-        <Footer />
+        {/* </div> */}
+        {/* <Footer /> */}
       </PageAnimation>
     </div>
   );

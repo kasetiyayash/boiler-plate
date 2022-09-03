@@ -7,16 +7,12 @@ const ProtectedRoute = () => {
   const isAuthenticated = localStorage.getItem("access_token");
 
   useEffect(() => {
-    if (isAuthenticated) {
-      navigate("/");
+    if (!isAuthenticated) {
+      navigate("/auth/login");
     }
   }, []);
 
-  return (
-    <>
-      <></>
-    </>
-  );
+  return <></>;
 };
 
 export default ProtectedRoute;
