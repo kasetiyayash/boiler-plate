@@ -1,100 +1,118 @@
 import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import { motion } from "framer-motion";
+import { useState } from "react";
+import PageAnimation from "../../components/PageAnimation";
 
 const Login = () => {
   const navigate = useNavigate();
 
-  return (
-    <>
-      <Formik
-        initialValues={{
-          email: "",
-          password: "",
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().required("Please enter your mail"),
-          password: Yup.string().required("Please enter your password"),
-        })}
-        onSubmit={(values) => {
-          const data = {
-            mail: values.email,
-            password: values.password,
-          };
-          alert(data);
-        }}
+  const Input = (props) => {
+    return (
+      <motion.input
+        type="text"
+        className="input input-bordered w-full focus:outline-none focus:outline-offset-0"
+        transition={{ duration: 0.1 }}
+        whileFocus={{ scale: 1.05 }}
+        {...props}
+      />
+    );
+  };
+
+  const Label = (props) => {
+    return (
+      <motion.label
+        className="text-sky-900"
+        transition={{ duration: 0.5 }}
+        {...props}
       >
-        {({ handleSubmit, setFieldValue }) => (
-          <Form onSubmit={handleSubmit}>
-            <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-              <div className="w-full p-6 m-auto bg-white border-t-4 border-purple-600 rounded-md shadow-md border-top lg:max-w-md">
-                <h1 className="text-3xl font-semibold text-center text-purple-700">
-                  LOGO
-                </h1>
-                <div className="mt-6">
+        {props.children}
+      </motion.label>
+    );
+  };
+
+  const Error = (props) => {
+    return (
+      <ErrorMessage name={props.name}>
+        {(msg) => (
+          <motion.div
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            animate={{ opacity: 1 }}
+            className="text-red-600"
+          >
+            {msg}
+          </motion.div>
+        )}
+      </ErrorMessage>
+    );
+  };
+
+  return (
+    <PageAnimation>
+      <div className="min-h-screen flex items-center justify-center">
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={Yup.object().shape({
+            email: Yup.string()
+              .email("Please enter valid email")
+              .required("Please enter email"),
+            password: Yup.string().required("Please enter password"),
+          })}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          {({ handleSubmit, handleChange, handleBlur }) => (
+            <Form onSubmit={handleSubmit}>
+              <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
+                <p className="text-3xl text-sky-900">Welcome Back, Mere Aka</p>
+                <div className="mt-12 flex flex-col gap-6">
+                  <div className="flex flex-col">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="text"
+                      placeholder="Please Enter Email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    />
+                    <Error name="email" />
+                  </div>
                   <div>
-                    <label className="block text-sm text-gray-800">Email</label>
-                    <input
-                      name="email"
-                      className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                      placeholder="Enter your mail"
-                      onChange={(e) => setFieldValue(e.target.value)}
-                    />
-                    <ErrorMessage
-                      name="email"
-                      component="div"
-                      className="mt-1 text-xs text-red-500"
-                    />
-                  </div>
-                  <div className="mt-6">
-                    <label className="block text-sm text-gray-800">
-                      Password
-                    </label>
-                    <input
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
                       name="password"
-                      className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                      placeholder="Enter your password"
-                      onChange={(e) => setFieldValue(e.target.value)}
+                      type="password"
+                      placeholder="Please Enter Password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
                     />
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className="mt-1 text-xs text-red-500"
-                    />
+                    <Error name="password" />
                   </div>
-                  <div className="mt-1">
-                    <Link
-                      to="#"
-                      className="text-xs text-gray-600 hover:underline"
-                    >
-                      Forget Password?
-                    </Link>
-                  </div>
-                  <div className="mt-6">
-                    <button
-                      type="submit"
-                      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
-                    >
-                      Login
-                    </button>
-                  </div>
-                </div>
-                <p className="flex justify-center mt-8 text-xs font-light text-gray-700">
-                  Don't have an account?
+                  <button type="submit" className="btn mt-2 bg-sky-900">
+                    Login
+                  </button>
                   <p
-                    className="ml-1 font-medium text-purple-600 hover:underline"
+                    className="link text-center mt-4"
                     onClick={() => navigate("/auth/signup")}
                   >
-                    Sign up
+                    Create an account
                   </p>
-                </p>
+                </div>
               </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </PageAnimation>
   );
 };
 
