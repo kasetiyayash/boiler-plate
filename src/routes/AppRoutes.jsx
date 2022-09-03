@@ -27,7 +27,6 @@ const DefaultRoute = () => {
   );
 };
 
-
 const AppRoutes = () => {
   const Protected = () => {
     return (

@@ -4,10 +4,12 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import PageAnimation from "../../components/PageAnimation";
-import Loader from "../../components/Loader";
+import { registerApi } from "../../store/auth/reducers";
+import { useDispatch } from "react-redux";
 
 const SignUp = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const Input = (props) => {
     return (
@@ -20,7 +22,6 @@ const SignUp = () => {
       />
     );
   };
-
   const Label = (props) => {
     return (
       <motion.label
@@ -32,7 +33,6 @@ const SignUp = () => {
       </motion.label>
     );
   };
-
   const Error = (props) => {
     return (
       <ErrorMessage name={props.name}>
@@ -51,7 +51,6 @@ const SignUp = () => {
   };
 
   return (
-    // <Loader />
     <PageAnimation>
       <div className="min-h-screen flex items-center justify-center">
         <Formik
@@ -60,6 +59,7 @@ const SignUp = () => {
             lname: "",
             email: "",
             password: "",
+            confirmPassword: "",
           }}
           validationSchema={Yup.object().shape({
             fname: Yup.string().required("Please enter first name"),
@@ -68,9 +68,20 @@ const SignUp = () => {
               .email("Please enter valid email")
               .required("Please enter email"),
             password: Yup.string().required("Please enter password"),
+            confirmPassword: Yup.string()
+              .oneOf([Yup.ref("password"), null], "Password must match")
+              .required("Please enter password"),
           })}
           onSubmit={(values) => {
-            console.log(values);
+            dispatch(
+              registerApi({
+                first_name: values?.fname,
+                last_name: values?.lname,
+                email: values?.email,
+                password: values?.password,
+                confirm_password: values?.confirmPassword,
+              })
+            );
           }}
         >
           {({ handleSubmit, handleChange, handleBlur }) => (
@@ -127,6 +138,18 @@ const SignUp = () => {
                       onChange={handleChange}
                     />
                     <Error name="password" />
+                  </div>
+                  <div>
+                    <Label htmlFor="confirmPassword">Confirm Password</Label>
+                    <Input
+                      id="confirmPassword"
+                      name="confirmPassword"
+                      type="password"
+                      placeholder="Please Enter Password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    />
+                    <Error name="confirmPassword" />
                   </div>
                   <button type="submit" className="btn mt-2 bg-sky-900">
                     Sign Up

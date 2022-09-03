@@ -4,10 +4,29 @@ import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import PageAnimation from "../../components/PageAnimation";
+import { useDispatch, useSelector } from "react-redux";
+import { loginApi } from "../../store/auth/reducers";
+import { useEffect } from "react";
+import { ACCESS_TOKEN } from "../../utils/Constants";
 
 const Login = () => {
   const navigate = useNavigate();
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
+
+  const { loginData, isLoading, isError } = useSelector((store) => ({
+    loginData: store?.auth?.loginData?.data,
+    isLoading: store?.auth?.loading,
+    isError: store?.auth?.error,
+  }));
+
+  console.log("==loginData==", loginData);
+
+  // useEffect(() => {
+  //   localStorage.setItem(ACCESS_TOKEN, loginData?.token);
+  //   if(){
+  //     navigate("/dashboard");
+  //   }
+  // }, []);
 
   const Input = (props) => {
     return (
@@ -20,7 +39,6 @@ const Login = () => {
       />
     );
   };
-
   const Label = (props) => {
     return (
       <motion.label
@@ -32,7 +50,6 @@ const Login = () => {
       </motion.label>
     );
   };
-
   const Error = (props) => {
     return (
       <ErrorMessage name={props.name}>
@@ -65,11 +82,15 @@ const Login = () => {
             password: Yup.string().required("Please enter password"),
           })}
           onSubmit={(values) => {
-            localStorage.setItem("access_token", values.email);
-            console.log(values);
+            dispatch(
+              loginApi({
+                email: values?.email,
+                password: values?.password,
+              })
+            );
           }}
         >
-          {({ handleSubmit, handleChange, handleBlur }) => (
+          {({ errors, handleSubmit, handleChange, handleBlur }) => (
             <Form onSubmit={handleSubmit}>
               <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
                 <p className="text-3xl text-sky-900">Welcome Back, Mere Aka</p>

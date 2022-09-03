@@ -7,16 +7,34 @@ import {
 import { post } from "../../helpers/axios";
 
 const initialStates = {
-  loading: null,
-  error: null,
+  loading: false,
+  error: false,
+  loginData: {},
   registerData: {},
 };
 
+// Login Api
 export const loginApi = createAsyncThunk(
+  "login",
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await post("login", data);
+      return response;
+    } catch (error) {
+      if (!error.response) {
+        throw error;
+      }
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Register Api
+export const registerApi = createAsyncThunk(
   "register",
   async (data, { rejectWithValue }) => {
     try {
-      const response = await post("auth/register", data);
+      const response = await post("register", data);
       return response;
     } catch (error) {
       if (!error.response) {
@@ -32,15 +50,29 @@ const authSlice = createSlice({
   initialState: initialStates,
   extraReducers: {
     [loginApi.pending]: (state, action) => {
-      state.loading = "loading";
+      state.loading = true;
+      state.error = false;
     },
     [loginApi.fulfilled]: (state, action) => {
-      state.loading = "success";
-      state.registerData = action.payload;
+      state.loading = false;
+      state.loginData = action.payload;
     },
     [loginApi.rejected]: (state, action) => {
-      state.loading = "fail";
-      state.error = action.payload.errorMessage;
+      state.loading = false;
+      state.error = true;
+    },
+
+    [registerApi.pending]: (state, action) => {
+      state.loading = true;
+      state.error = false;
+    },
+    [registerApi.fulfilled]: (state, action) => {
+      state.loading = false;
+      state.registerData = action.payload;
+    },
+    [registerApi.rejected]: (state, action) => {
+      state.loading = false;
+      state.error = false;
     },
   },
 });

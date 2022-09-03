@@ -1,5 +1,4 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { getDefaultMiddleware } from "@reduxjs/toolkit";
 
 import authReducer from "./auth/reducers"; // auth reducer
 
