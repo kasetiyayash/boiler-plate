@@ -1,7 +1,7 @@
 import axios from "axios";
 import { ACCESS_TOKEN } from "../utils/Constants";
 
-const API_URL = "https://otm.zyko.app/api/";
+const API_URL = "http://192.168.29.222:8003/api/v1/";
 
 export const axiosApi = axios.create({
   baseURL: API_URL,

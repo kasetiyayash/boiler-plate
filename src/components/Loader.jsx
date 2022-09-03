@@ -1,7 +1,7 @@
-import React, { useEffect } from 'react'
-import Cloud1 from "../assets/img/cloud1.jpg"
-import Cloud2 from "../assets/img/cloud2.jpg"
-import Cloud3 from "../assets/img/cloud3.jpg"
+import React, { useEffect } from "react";
+import Cloud1 from "../assets/img/cloud1.jpg";
+import Cloud2 from "../assets/img/cloud2.jpg";
+import Cloud3 from "../assets/img/cloud3.jpg";
 
 const Loader = ({ setLoading }) => {
   useEffect(() => {
@@ -20,4 +20,4 @@ const Loader = ({ setLoading }) => {
   );
 };
 
-export default Loader
+export default Loader;

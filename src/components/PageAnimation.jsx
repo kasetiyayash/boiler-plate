@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { motion } from "framer-motion";
 
 const PageAnimation = ({ children }) => {
@@ -13,4 +13,4 @@ const PageAnimation = ({ children }) => {
   );
 };
 
-export default PageAnimation
+export default PageAnimation;

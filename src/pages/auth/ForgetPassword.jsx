@@ -2,7 +2,6 @@ import { Field, Form, Formik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import ErrorMessages from "../../components/ErrorMessages";
 
 const ForgetPassword = () => {
   const navigate = useNavigate();
@@ -51,7 +50,6 @@ const ForgetPassword = () => {
                         className="text-sm block w-full px-4 py-2 mt-1 text-slate-500 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         placeholder="Enter your mail"
                       />
-                      <ErrorMessages name="email" />
                     </div>
                     <p className="flex justify-center mt-6 text-xs font-light text-gray-700">
                       OR
@@ -67,7 +65,6 @@ const ForgetPassword = () => {
                         className="text-sm block w-full px-4 py-2 mt-1 text-slate-500 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
                         placeholder="Enter your mobile number"
                       />
-                      <ErrorMessages name="mobileNumber" />
                     </div>
                     <div className="mt-6">
                       <button
