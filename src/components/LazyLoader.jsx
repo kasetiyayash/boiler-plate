@@ -1,6 +1,6 @@
 import React from "react";
 
-const LazyloadLoader = () => {
+const LazyLoader = () => {
   return (
     <>
       <div>
@@ -10,4 +10,4 @@ const LazyloadLoader = () => {
   );
 };
 
-export default LazyloadLoader;
+export default LazyLoader;

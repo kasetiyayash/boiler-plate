@@ -1,149 +1,149 @@
 import React from "react";
-import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import ErrorMessages from "../../components/ErrorMessages";
+import { motion } from "framer-motion";
+import PageAnimation from "../../components/PageAnimation";
+import Loader from "../../components/Loader";
 
 const SignUp = () => {
   const navigate = useNavigate();
 
-  return (
-    <>
-      <Formik
-        initialValues={{
-          firstName: "",
-          lastName: "",
-          mobileNumber: "",
-          email: "",
-          password: "",
-        }}
-        validationSchema={Yup.object().shape({
-          firstName: Yup.string().required("Please enter your first name"),
-          lastName: Yup.string().required("Please enter your last name"),
-          email: Yup.string()
-            .email("Please enter valid email")
-            .required("Please enter your mail"),
-          mobileNumber: Yup.string().required(
-            "Please enter your mobile number"
-          ),
-          password: Yup.string().required("Please enter your password"),
-        })}
-        onSubmit={(values) => {
-          console.log(values);
-          // dispatch({
-          //   email: values?.email,
-          //   password: values?.password,
-          // });s
-          // navigate("/dashboard/home");
-        }}
+  const Input = (props) => {
+    return (
+      <motion.input
+        type="text"
+        className="input input-bordered w-full focus:outline-none focus:outline-offset-0"
+        transition={{ duration: 0.1 }}
+        whileFocus={{ scale: 1.05 }}
+        {...props}
+      />
+    );
+  };
+
+  const Label = (props) => {
+    return (
+      <motion.label
+        className="text-sky-900"
+        transition={{ duration: 0.5 }}
+        {...props}
       >
-        {({ handleSubmit }) => (
-          <Form onSubmit={handleSubmit}>
-            <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-              <div className="w-full p-6 m-auto bg-white border-t-4 border-purple-600 rounded-md shadow-md border-top lg:max-w-md">
-                <h1 className="text-3xl font-semibold text-center text-purple-700">
-                  Sign Up
-                </h1>
-                <div className="mt-6">
-                  <div className="flex justify-center gap-4">
-                    <div>
-                      <label className="block text-sm text-gray-800">
-                        First Name
-                      </label>
-                      <Field
-                        as="input"
-                        name="firstName"
+        {props.children}
+      </motion.label>
+    );
+  };
+
+  const Error = (props) => {
+    return (
+      <ErrorMessage name={props.name}>
+        {(msg) => (
+          <motion.div
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            animate={{ opacity: 1 }}
+            className="text-red-600"
+          >
+            {msg}
+          </motion.div>
+        )}
+      </ErrorMessage>
+    );
+  };
+
+  return (
+    // <Loader />
+    <PageAnimation>
+      <div className="min-h-screen flex items-center justify-center">
+        <Formik
+          initialValues={{
+            fname: "",
+            lname: "",
+            email: "",
+            password: "",
+          }}
+          validationSchema={Yup.object().shape({
+            fname: Yup.string().required("Please enter first name"),
+            lname: Yup.string().required("Please enter last name"),
+            email: Yup.string()
+              .email("Please enter valid email")
+              .required("Please enter email"),
+            password: Yup.string().required("Please enter password"),
+          })}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          {({ handleSubmit, handleChange, handleBlur }) => (
+            <Form onSubmit={handleSubmit}>
+              <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
+                <p className="text-3xl text-sky-900">Create Account</p>
+                <div className="mt-8 flex flex-col gap-6">
+                  <div className="flex gap-4">
+                    <div className="flex flex-col">
+                      <Label htmlFor="fname">First Name</Label>
+                      <Input
+                        id="fname"
+                        name="fname"
                         type="text"
-                        className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        placeholder="Enter your first name"
+                        placeholder="Please Enter First Name"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
                       />
-                      <ErrorMessages name="firstName" />
+                      <Error name="fname" />
                     </div>
-                    <div>
-                      <label className="block text-sm text-gray-800">
-                        Last Name
-                      </label>
-                      <Field
-                        as="input"
-                        name="lastName"
+                    <div className="flex flex-col">
+                      <Label htmlFor="lname">Last Name</Label>
+                      <Input
+                        id="lname"
+                        name="lname"
                         type="text"
-                        className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                        placeholder="Enter your last name"
+                        placeholder="Please Enter Last Name"
+                        onBlur={handleBlur}
+                        onChange={handleChange}
                       />
-                      <ErrorMessages name="lastName" />
+                      <Error name="lname" />
                     </div>
                   </div>
-
-                  <div className="mt-6">
-                    <label className="block text-sm text-gray-800">Email</label>
-                    <Field
-                      as="input"
+                  <div className="flex flex-col">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
                       name="email"
                       type="text"
-                      className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                      placeholder="Enter your mail"
+                      placeholder="Please Enter Email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
                     />
-                    <ErrorMessages name="email" />
+                    <Error name="email" />
                   </div>
-                  <div className="mt-6">
-                    <label className="block text-sm text-gray-800">
-                      Mobile Number
-                    </label>
-                    <Field
-                      as="input"
-                      name="mobileNumber"
-                      type="number"
-                      className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                      placeholder="Enter your mobile number"
-                    />
-                    <ErrorMessages name="mobileNumber" />
-                  </div>
-                  <div className="mt-6">
-                    <label className="block text-sm text-gray-800">
-                      Password
-                    </label>
-                    <Field
-                      as="input"
+                  <div>
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
                       name="password"
-                      type="text"
-                      className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                      placeholder="Enter your password"
+                      type="password"
+                      placeholder="Please Enter Password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
                     />
-                    <ErrorMessages name="password" />
+                    <Error name="password" />
                   </div>
-                  <div className="mt-2">
-                    <p
-                      to="#"
-                      className="text-xs text-gray-600 hover:underline cursor-pointer"
-                      onClick={() => navigate("/auth/forget-password")}
-                    >
-                      Forget Password?
-                    </p>
-                  </div>
-                  <div className="mt-6">
-                    <button
-                      type="submit"
-                      className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
-                    >
-                      Sign Up
-                    </button>
-                  </div>
-                </div>
-                <p className="flex justify-center mt-8 text-xs font-light text-gray-700">
-                  Already have an account?
-                  <span
-                    className="ml-1 font-medium text-purple-600 hover:underline cursor-pointer"
+                  <button type="submit" className="btn mt-2 bg-sky-900">
+                    Sign Up
+                  </button>
+                  <p
+                    className="link text-center mt-4"
                     onClick={() => navigate("/auth/login")}
                   >
-                    Login
-                  </span>
-                </p>
+                    Already have an account
+                  </p>
+                </div>
               </div>
-            </div>
-          </Form>
-        )}
-      </Formik>
-    </>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </PageAnimation>
   );
 };
 

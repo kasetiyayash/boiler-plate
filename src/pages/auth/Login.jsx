@@ -1,99 +1,119 @@
 import { Field, Form, Formik } from "formik";
 import React from "react";
 import { useNavigate } from "react-router-dom";
+import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import ErrorMessages from "../../components/ErrorMessages";
-// import { useDispatch } from "react-redux";
+import { motion } from "framer-motion";
+import PageAnimation from "../../components/PageAnimation";
 
 const Login = () => {
   const navigate = useNavigate();
   // const dispatch = useDispatch();
 
+  const Input = (props) => {
+    return (
+      <motion.input
+        type="text"
+        className="input input-bordered w-full focus:outline-none focus:outline-offset-0"
+        transition={{ duration: 0.1 }}
+        whileFocus={{ scale: 1.05 }}
+        {...props}
+      />
+    );
+  };
+
+  const Label = (props) => {
+    return (
+      <motion.label
+        className="text-sky-900"
+        transition={{ duration: 0.5 }}
+        {...props}
+      >
+        {props.children}
+      </motion.label>
+    );
+  };
+
+  const Error = (props) => {
+    return (
+      <ErrorMessage name={props.name}>
+        {(msg) => (
+          <motion.div
+            initial={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            animate={{ opacity: 1 }}
+            className="text-red-600"
+          >
+            {msg}
+          </motion.div>
+        )}
+      </ErrorMessage>
+    );
+  };
+
   return (
-    <Formik
-      initialValues={{
-        email: "",
-        password: "",
-      }}
-      validationSchema={Yup.object().shape({
-        email: Yup.string()
-          .email("Please enter valid email")
-          .required("Please enter your mail"),
-        password: Yup.string().required("Please enter your password"),
-      })}
-      onSubmit={(values) => {
-        console.log(values);
-        // dispatch({
-        //   email: values?.email,
-        //   password: values?.password,
-        // });
-        // navigate("/dashboard/home");
-      }}
-    >
-      {({ handleSubmit }) => (
-        <Form onSubmit={handleSubmit}>
-          <div className="relative flex flex-col justify-center min-h-screen overflow-hidden">
-            <div className="w-full p-6 m-auto bg-white border-t-4 border-purple-600 rounded-md shadow-md border-top lg:max-w-md">
-              <h1 className="text-3xl font-semibold text-center text-purple-700">
-                Login
-              </h1>
-              <div className="mt-6">
-                <div>
-                  <label className="block text-sm text-gray-800">Email</label>
-                  <Field
-                    as="input"
-                    name="email"
-                    type="text"
-                    className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                    placeholder="Enter your mail"
-                  />
-                  <ErrorMessages name="email" />
-                </div>
-                <div className="mt-6">
-                  <label className="block text-sm text-gray-800">
-                    Password
-                  </label>
-                  <Field
-                    as="input"
-                    name="password"
-                    type="text"
-                    className="text-sm block w-full px-4 py-2 mt-1 text-purple-700 bg-white border rounded-md focus:border-purple-400 focus:ring-purple-300 focus:outline-none focus:ring focus:ring-opacity-40"
-                    placeholder="Enter your password"
-                  />
-                  <ErrorMessages name="password" />
-                </div>
-                <div className="mt-2">
-                  <p
-                    to="#"
-                    className="text-xs text-gray-600 hover:underline cursor-pointer"
-                    onClick={() => navigate("/auth/forget-password")}
-                  >
-                    Forget Password?
-                  </p>
-                </div>
-                <div className="mt-6">
-                  <button
-                    type="submit"
-                    className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-purple-700 rounded-md hover:bg-purple-600 focus:outline-none focus:bg-purple-600"
-                  >
+    <PageAnimation>
+      <div className="min-h-screen flex items-center justify-center">
+        <Formik
+          initialValues={{
+            email: "",
+            password: "",
+          }}
+          validationSchema={Yup.object().shape({
+            email: Yup.string()
+              .email("Please enter valid email")
+              .required("Please enter email"),
+            password: Yup.string().required("Please enter password"),
+          })}
+          onSubmit={(values) => {
+            console.log(values);
+          }}
+        >
+          {({ handleSubmit, handleChange, handleBlur }) => (
+            <Form onSubmit={handleSubmit}>
+              <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
+                <p className="text-3xl text-sky-900">Welcome Back, Mere Aka</p>
+                <div className="mt-12 flex flex-col gap-6">
+                  <div className="flex flex-col">
+                    <Label htmlFor="email">Email</Label>
+                    <Input
+                      id="email"
+                      name="email"
+                      type="text"
+                      placeholder="Please Enter Email"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    />
+                    <Error name="email" />
+                  </div>
+                  <div>
+                    <Label htmlFor="password">Password</Label>
+                    <Input
+                      id="password"
+                      name="password"
+                      type="password"
+                      placeholder="Please Enter Password"
+                      onBlur={handleBlur}
+                      onChange={handleChange}
+                    />
+                    <Error name="password" />
+                  </div>
+                  <button type="submit" className="btn mt-2 bg-sky-900">
                     Login
                   </button>
+                  <p
+                    className="link text-center mt-4"
+                    onClick={() => navigate("/auth/signup")}
+                  >
+                    Create an account
+                  </p>
                 </div>
               </div>
-              <p className="flex justify-center mt-8 text-xs font-light text-gray-700">
-                Don't have an account?
-                <span
-                  className="ml-1 font-medium text-purple-600 hover:underline cursor-pointer"
-                  onClick={() => navigate("/auth/signup")}
-                >
-                  Sign up
-                </span>
-              </p>
-            </div>
-          </div>
-        </Form>
-      )}
-    </Formik>
+            </Form>
+          )}
+        </Formik>
+      </div>
+    </PageAnimation>
   );
 };
 
