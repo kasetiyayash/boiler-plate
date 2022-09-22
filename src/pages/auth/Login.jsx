@@ -32,24 +32,24 @@ const Login = () => {
     return (
       <motion.input
         type="text"
-        className="input input-bordered w-full focus:outline-none focus:outline-offset-0"
+        className={`border ${
+          props.error && props.touch ? "border-red-600" : "border-black"
+        } p-3 w-full rounded-md mt-1`}
         transition={{ duration: 0.1 }}
         whileFocus={{ scale: 1.05 }}
         {...props}
       />
     );
   };
+
   const Label = (props) => {
     return (
-      <motion.label
-        className="text-sky-900"
-        transition={{ duration: 0.5 }}
-        {...props}
-      >
+      <motion.label transition={{ duration: 0.5 }} {...props}>
         {props.children}
       </motion.label>
     );
   };
+
   const Error = (props) => {
     return (
       <ErrorMessage name={props.name}>
@@ -90,18 +90,20 @@ const Login = () => {
             );
           }}
         >
-          {({ errors, handleSubmit, handleChange, handleBlur }) => (
+          {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
             <Form onSubmit={handleSubmit}>
-              <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
-                <p className="text-3xl text-sky-900">Welcome Back, Mere Aka</p>
-                <div className="mt-12 flex flex-col gap-6">
-                  <div className="flex flex-col">
+              <div className="p-6 text-black font-semibold">
+                <p className="text-6xl font-bold ">Welcome Back</p>
+                <div className="mt-16 flex flex-col gap-6">
+                  <div>
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       name="email"
                       type="text"
                       placeholder="Please Enter Email"
+                      error={errors.email}
+                      touch={touched.email}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
@@ -114,12 +116,17 @@ const Login = () => {
                       name="password"
                       type="password"
                       placeholder="Please Enter Password"
+                      error={errors.password}
+                      touch={touched.password}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
                     <Error name="password" />
                   </div>
-                  <button type="submit" className="btn mt-2 bg-sky-900">
+                  <button
+                    type="submit"
+                    className="border border-black rounded-md p-3 mt-4 hover:bg-black hover:text-main"
+                  >
                     Login
                   </button>
                   <p

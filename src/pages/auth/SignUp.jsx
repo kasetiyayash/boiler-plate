@@ -15,7 +15,9 @@ const SignUp = () => {
     return (
       <motion.input
         type="text"
-        className="input input-bordered w-full focus:outline-none focus:outline-offset-0"
+        className={`border ${
+          props.error && props.touch ? "border-red-600" : "border-black"
+        } p-3 w-full rounded-md mt-1`}
         transition={{ duration: 0.1 }}
         whileFocus={{ scale: 1.05 }}
         {...props}
@@ -24,11 +26,7 @@ const SignUp = () => {
   };
   const Label = (props) => {
     return (
-      <motion.label
-        className="text-sky-900"
-        transition={{ duration: 0.5 }}
-        {...props}
-      >
+      <motion.label transition={{ duration: 0.5 }} {...props}>
         {props.children}
       </motion.label>
     );
@@ -41,7 +39,7 @@ const SignUp = () => {
             initial={{ opacity: 0 }}
             transition={{ duration: 0.3 }}
             animate={{ opacity: 1 }}
-            className="text-red-600"
+            className="text-red-700 font-semibold"
           >
             {msg}
           </motion.div>
@@ -84,44 +82,50 @@ const SignUp = () => {
             );
           }}
         >
-          {({ handleSubmit, handleChange, handleBlur }) => (
+          {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (
             <Form onSubmit={handleSubmit}>
-              <div className="bg-white p-6 md:p-24 rounded-2xl bg-opacity-30 backdrop-filter backdrop-blur-lg">
-                <p className="text-3xl text-sky-900">Create Account</p>
+              <div className="p-6 font-semibold text-black">
+                <p className="text-6xl font-bold">Create Account</p>
                 <div className="mt-8 flex flex-col gap-6">
-                  <div className="flex gap-4">
-                    <div className="flex flex-col">
+                  <div className="flex flex-col gap-6 md:flex-row md:gap-4">
+                    <div>
                       <Label htmlFor="fname">First Name</Label>
                       <Input
                         id="fname"
                         name="fname"
                         type="text"
-                        placeholder="Please Enter First Name"
+                        placeholder="Enter First Name"
+                        error={errors.fname}
+                        touch={touched.fname}
                         onBlur={handleBlur}
                         onChange={handleChange}
                       />
                       <Error name="fname" />
                     </div>
-                    <div className="flex flex-col">
+                    <div>
                       <Label htmlFor="lname">Last Name</Label>
                       <Input
                         id="lname"
                         name="lname"
                         type="text"
-                        placeholder="Please Enter Last Name"
+                        placeholder="Enter Last Name"
+                        error={errors.lname}
+                        touch={touched.lname}
                         onBlur={handleBlur}
                         onChange={handleChange}
                       />
                       <Error name="lname" />
                     </div>
                   </div>
-                  <div className="flex flex-col">
+                  <div>
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
                       name="email"
                       type="text"
-                      placeholder="Please Enter Email"
+                      placeholder="Enter Email"
+                      error={errors.email}
+                      touch={touched.email}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
@@ -133,7 +137,9 @@ const SignUp = () => {
                       id="password"
                       name="password"
                       type="password"
-                      placeholder="Please Enter Password"
+                      placeholder="Enter Password"
+                      error={errors.password}
+                      touch={touched.password}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
@@ -145,20 +151,25 @@ const SignUp = () => {
                       id="confirmPassword"
                       name="confirmPassword"
                       type="password"
-                      placeholder="Please Enter Password"
+                      placeholder="Enter Confirm Password"
+                      error={errors.confirmPassword}
+                      touch={touched.confirmPassword}
                       onBlur={handleBlur}
                       onChange={handleChange}
                     />
                     <Error name="confirmPassword" />
                   </div>
-                  <button type="submit" className="btn mt-2 bg-sky-900">
+                  <button
+                    type="submit"
+                    className="border border-black rounded-md p-3 mt-4 hover:bg-black hover:text-main"
+                  >
                     Sign Up
                   </button>
                   <p
                     className="link text-center mt-4"
                     onClick={() => navigate("/auth/login")}
                   >
-                    Already have an account
+                    Already have an account ?
                   </p>
                 </div>
               </div>

@@ -6,7 +6,7 @@ import PageAnimation from "../../components/PageAnimation";
 
 const index = () => {
   return (
-    <div className="p-2">
+    <div>
       <PageAnimation>
         <Header />
         {/* <div className="min-h-[86vh]"> */}
