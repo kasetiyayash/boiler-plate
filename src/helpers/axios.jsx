@@ -1,14 +1,13 @@
 import axios from "axios";
-import { ACCESS_TOKEN } from "../utils/Constants";
 
-const API_URL = "http://192.168.29.222:8003/api/v1/";
+const API_URL = "http://192.168.0.172:8003/api/v1/";
 
 export const axiosApi = axios.create({
   baseURL: API_URL,
 });
 
-axiosApi.defaults.headers.common["x-access-token"] =
-  localStorage.getItem(ACCESS_TOKEN);
+const accessToken = `${localStorage.getItem("accessToken")}`;
+axiosApi.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
 
 axiosApi.interceptors.response.use(
   (response) => response,

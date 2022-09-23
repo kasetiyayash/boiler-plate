@@ -5,67 +5,61 @@ import * as Yup from "yup";
 import { motion } from "framer-motion";
 import PageAnimation from "../../components/PageAnimation";
 import { useDispatch, useSelector } from "react-redux";
-import { loginApi } from "../../store/auth/reducers";
+import { loginApi } from "../../store/auth/Reducers";
 import { useEffect } from "react";
-import { ACCESS_TOKEN } from "../../utils/Constants";
+import { useState } from "react";
+import { ACCESS_TOKEN, USER_ID } from "../../utils/Constants";
 
 const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
   const { loginData, isLoading, isError } = useSelector((store) => ({
     loginData: store?.auth?.loginData?.data,
-    isLoading: store?.auth?.loading,
-    isError: store?.auth?.error,
+    isLoading: store?.auth?.loginData?.loading,
+    isError: store?.auth?.loginData?.error,
   }));
 
-  console.log("==loginData==", loginData);
+  useEffect(() => {
+    if (!isLoading && !isError && formSubmitting) {
+      localStorage.setItem(ACCESS_TOKEN, loginData?.token);
+      localStorage.setItem(USER_ID, loginData?.user?.id);
+      navigate("/dashboard");
+    }
+  }, [isLoading, isError, formSubmitting]);
 
-  // useEffect(() => {
-  //   localStorage.setItem(ACCESS_TOKEN, loginData?.token);
-  //   if(){
-  //     navigate("/dashboard");
-  //   }
-  // }, []);
-
-  const Input = (props) => {
-    return (
-      <motion.input
-        type="text"
-        className={`border ${
-          props.error && props.touch ? "border-red-600" : "border-black"
-        } p-3 w-full rounded-md mt-1`}
-        transition={{ duration: 0.1 }}
-        whileFocus={{ scale: 1.05 }}
-        {...props}
-      />
-    );
-  };
-
-  const Label = (props) => {
-    return (
-      <motion.label transition={{ duration: 0.5 }} {...props}>
-        {props.children}
-      </motion.label>
-    );
-  };
-
-  const Error = (props) => {
-    return (
-      <ErrorMessage name={props.name}>
-        {(msg) => (
-          <motion.div
-            initial={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            animate={{ opacity: 1 }}
-            className="text-red-600"
-          >
-            {msg}
-          </motion.div>
-        )}
-      </ErrorMessage>
-    );
-  };
+  const Input = (props) => (
+    <motion.input
+      type="text"
+      className={`border ${
+        props.error && props.touch ? "border-red-600" : "border-black"
+      } p-3 w-full rounded-md mt-1`}
+      transition={{ duration: 0.1 }}
+      whileFocus={{ scale: 1.05 }}
+      {...props}
+    />
+  );
+  const Label = (props) => (
+    <motion.label transition={{ duration: 0.5 }} {...props}>
+      {props.children}
+    </motion.label>
+  );
+  const Error = (props) => (
+    <ErrorMessage name={props.name}>
+      {(msg) => (
+        <motion.div
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          animate={{ opacity: 1 }}
+          className="text-red-600"
+        >
+          {msg}
+        </motion.div>
+      )}
+    </ErrorMessage>
+  );
 
   return (
     <PageAnimation>
@@ -88,6 +82,7 @@ const Login = () => {
                 password: values?.password,
               })
             );
+            setFormSubmitting(true);
           }}
         >
           {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (

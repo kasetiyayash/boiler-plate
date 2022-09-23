@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Footer from "./Footer";
 import Header from "./Header";
 import { Outlet } from "react-router-dom";
@@ -9,9 +9,7 @@ const index = () => {
     <div>
       <PageAnimation>
         <Header />
-        {/* <div className="min-h-[86vh]"> */}
         <Outlet />
-        {/* </div> */}
         {/* <Footer /> */}
       </PageAnimation>
     </div>

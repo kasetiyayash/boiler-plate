@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { motion } from "framer-motion";
 import {
   AngularJS,
@@ -10,34 +10,41 @@ import {
   VueJS,
 } from "../../assets/allSvg";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
 
 const Popular = () => {
+  // const { platesData, isLoading, isError } = useSelector((store) => ({
+  //   platesData: store?.dashboard?.platesData,
+  //   isLoading: store?.dashboard?.platesData?.loading,
+  //   isError: store?.dashboard?.platesData?.error,
+  // }));
+  // console.log("==platesData==", platesData);
 
-const Card = ({ logo }) => {
-  const navigate = useNavigate();
-  return (
-    <motion.div
-      // onClick={() => setTimeout(() => navigate("/react"), 0)}
-      initial={{ scale: 1.5 }}
-      className="p-12 flex justify-center items-center bg-main rounded-2xl drop-shadow-md hover:drop-shadow-lg  border-black"
-      animate={{
-        scale: 1,
-        transition: { duration: 0.2 },
-      }}
-      whileHover={{
-        scale: 1.1,
-        transition: { duration: 0.2 },
-      }}
-      whileTap={{
-        scale: 5,
-        opacity: 0,
-        transition: { duration: 0.2 },
-      }}
-    >
-      {logo}
-    </motion.div>
-  );
-};
+  const Card = ({ logo }) => {
+    const navigate = useNavigate();
+    return (
+      <motion.div
+        // onClick={() => setTimeout(() => navigate("/react"), 0)}
+        initial={{ scale: 1.5 }}
+        className="p-12 flex justify-center items-center bg-main rounded-2xl drop-shadow-md hover:drop-shadow-lg  border-black"
+        animate={{
+          scale: 1,
+          transition: { duration: 0.2 },
+        }}
+        whileHover={{
+          scale: 1.1,
+          transition: { duration: 0.2 },
+        }}
+        whileTap={{
+          scale: 5,
+          opacity: 0,
+          transition: { duration: 0.2 },
+        }}
+      >
+        {logo}
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-centers">
@@ -53,6 +60,6 @@ const Card = ({ logo }) => {
       </div>
     </div>
   );
-}
+};
 
-export default Popular
+export default Popular;

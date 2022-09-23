@@ -1,52 +1,63 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import { motion } from "framer-motion";
 import PageAnimation from "../../components/PageAnimation";
-import { registerApi } from "../../store/auth/reducers";
-import { useDispatch } from "react-redux";
+import { registerApi } from "../../store/auth/Reducers";
+import { useDispatch, useSelector } from "react-redux";
+import { ACCESS_TOKEN, USER_ID } from "../../utils/Constants";
 
 const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const Input = (props) => {
-    return (
-      <motion.input
-        type="text"
-        className={`border ${
-          props.error && props.touch ? "border-red-600" : "border-black"
-        } p-3 w-full rounded-md mt-1`}
-        transition={{ duration: 0.1 }}
-        whileFocus={{ scale: 1.05 }}
-        {...props}
-      />
-    );
-  };
-  const Label = (props) => {
-    return (
-      <motion.label transition={{ duration: 0.5 }} {...props}>
-        {props.children}
-      </motion.label>
-    );
-  };
-  const Error = (props) => {
-    return (
-      <ErrorMessage name={props.name}>
-        {(msg) => (
-          <motion.div
-            initial={{ opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            animate={{ opacity: 1 }}
-            className="text-red-700 font-semibold"
-          >
-            {msg}
-          </motion.div>
-        )}
-      </ErrorMessage>
-    );
-  };
+  const [formSubmitting, setFormSubmitting] = useState(false);
+
+  const { signUpData, isLoading, isError } = useSelector((store) => ({
+    signUpData: store?.auth?.registerData?.data,
+    isLoading: store?.auth?.registerData?.loading,
+    isError: store?.auth?.registerData?.error,
+  }));
+
+  useEffect(() => {
+    if ((!isLoading, !isError, formSubmitting)) {
+      localStorage.setItem(ACCESS_TOKEN, signUpData?.token);
+      localStorage.setItem(USER_ID, signUpData?.user?.id);
+      navigate("/dashboard");
+    }
+  }, [isLoading, isError, formSubmitting]);
+
+  const Input = (props) => (
+    <motion.input
+      type="text"
+      className={`border ${
+        props.error && props.touch ? "border-red-600" : "border-black"
+      } p-3 w-full rounded-md mt-1`}
+      transition={{ duration: 0.1 }}
+      whileFocus={{ scale: 1.05 }}
+      {...props}
+    />
+  );
+  const Label = (props) => (
+    <motion.label transition={{ duration: 0.5 }} {...props}>
+      {props.children}
+    </motion.label>
+  );
+  const Error = (props) => (
+    <ErrorMessage name={props.name}>
+      {(msg) => (
+        <motion.div
+          initial={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          animate={{ opacity: 1 }}
+          className="text-red-700 font-semibold"
+        >
+          {msg}
+        </motion.div>
+      )}
+    </ErrorMessage>
+  );
 
   return (
     <PageAnimation>
@@ -67,7 +78,7 @@ const SignUp = () => {
               .required("Please enter email"),
             password: Yup.string().required("Please enter password"),
             confirmPassword: Yup.string()
-              .oneOf([Yup.ref("password"), null], "Password must match")
+              .oneOf([Yup.ref("password"), null], "Password not matched")
               .required("Please enter password"),
           })}
           onSubmit={(values) => {
@@ -80,6 +91,7 @@ const SignUp = () => {
                 confirm_password: values?.confirmPassword,
               })
             );
+            setFormSubmitting(true);
           }}
         >
           {({ errors, touched, handleSubmit, handleChange, handleBlur }) => (

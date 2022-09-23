@@ -6,7 +6,6 @@ import DefaultLayout from "../layout/DefaultLayout";
 import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
-import ForgetPassword from "../pages/auth/ForgetPassword";
 import Dashboard from "../pages/dashboard";
 
 const AuthRoute = () => {
@@ -14,7 +13,6 @@ const AuthRoute = () => {
     <Routes>
       <Route index exact path="/login" element={<Login />} />
       <Route exact path="/signup" element={<SignUp />} />
-      <Route exact path="/forget-password" element={<ForgetPassword />} />
     </Routes>
   );
 };

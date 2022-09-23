@@ -7,15 +7,23 @@ import {
 import { post } from "../../helpers/axios";
 
 const initialStates = {
-  loading: false,
-  error: false,
-  loginData: {},
-  registerData: {},
+  loginData: {
+    loading: false,
+    error: false,
+    data: {},
+    errorMsg: "",
+  },
+  registerData: {
+    loading: false,
+    error: false,
+    data: {},
+    errorMsg: "",
+  },
 };
 
 // Login Api
 export const loginApi = createAsyncThunk(
-  "login",
+  "loginApi",
   async (data, { rejectWithValue }) => {
     try {
       const response = await post("login", data);
@@ -31,7 +39,7 @@ export const loginApi = createAsyncThunk(
 
 // Register Api
 export const registerApi = createAsyncThunk(
-  "register",
+  "registerApi",
   async (data, { rejectWithValue }) => {
     try {
       const response = await post("register", data);
@@ -49,30 +57,30 @@ const authSlice = createSlice({
   name: "auth",
   initialState: initialStates,
   extraReducers: {
-    [loginApi.pending]: (state, action) => {
-      state.loading = true;
-      state.error = false;
+    [loginApi.pending]: (state) => {
+      state.loginData.loading = true;
     },
     [loginApi.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.loginData = action.payload;
+      state.loginData.loading = false;
+      state.loginData.error = false;
+      state.loginData.data = action.payload.data;
     },
-    [loginApi.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = true;
+    [loginApi.rejected]: (state) => {
+      state.loginData.loading = false;
+      state.loginData.error = true;
     },
 
-    [registerApi.pending]: (state, action) => {
-      state.loading = true;
-      state.error = false;
+    [registerApi.pending]: (state) => {
+      state.registerData.loading = true;
     },
     [registerApi.fulfilled]: (state, action) => {
-      state.loading = false;
-      state.registerData = action.payload;
+      state.registerData.loading = false;
+      state.registerData.error = false;
+      state.registerData.data = action.payload.data;
     },
-    [registerApi.rejected]: (state, action) => {
-      state.loading = false;
-      state.error = false;
+    [registerApi.rejected]: (state) => {
+      state.registerData.loading = false;
+      state.registerData.error = true;
     },
   },
 });
