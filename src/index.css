@@ -11,7 +11,7 @@ body {
     padding: 0;
     width: 100%;
     height: 100%;
-    /* cursor: none; */
+    cursor: none;
     z-index: 2;
     min-height: 100vh;
     background: #fcf3ea;
@@ -36,14 +36,14 @@ input::placeholder {
 .cursor {
     width: 40px;
     height: 40px;
-    background-color: red;
-    opacity: 0.5;
+    /* background-color: red; */
+    /* opacity: 0.5; */
     border: 2px solid #000000;
     border-radius: 100%;
     position: fixed;
     transform: translate(-50%, -50%);
     pointer-events: none;
-    z-index: 1;
+    z-index: 99;
     transition: all 150ms ease;
     transition-property: opacity;
 }

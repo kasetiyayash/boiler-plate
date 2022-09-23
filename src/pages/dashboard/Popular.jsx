@@ -1,0 +1,58 @@
+import React from 'react'
+import { motion } from "framer-motion";
+import {
+  AngularJS,
+  CRA,
+  NextJS,
+  NuxtJS,
+  ReactJS,
+  ViteJS,
+  VueJS,
+} from "../../assets/allSvg";
+import { useNavigate } from "react-router-dom";
+
+const Popular = () => {
+
+const Card = ({ logo }) => {
+  const navigate = useNavigate();
+  return (
+    <motion.div
+      // onClick={() => setTimeout(() => navigate("/react"), 0)}
+      initial={{ scale: 1.5 }}
+      className="p-12 flex justify-center items-center bg-main rounded-2xl drop-shadow-md hover:drop-shadow-lg  border-black"
+      animate={{
+        scale: 1,
+        transition: { duration: 0.2 },
+      }}
+      whileHover={{
+        scale: 1.1,
+        transition: { duration: 0.2 },
+      }}
+      whileTap={{
+        scale: 5,
+        opacity: 0,
+        transition: { duration: 0.2 },
+      }}
+    >
+      {logo}
+    </motion.div>
+  );
+};
+
+  return (
+    <div className="min-h-screen flex flex-col justify-center items-centers">
+      <p className="font-bold text-8xl mb-8">Popular Plates</p>
+      <div className="p-6 md:p-12 grid grid-cls-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
+        <Card logo={<ViteJS width="150" height="150" />} />
+        <Card logo={<ReactJS width="150" height="150" />} />
+        <Card logo={<NextJS width="150" height="150" />} />
+        <Card logo={<NuxtJS width="150" height="150" />} />
+        <Card logo={<VueJS width="150" height="150" />} />
+        <Card logo={<AngularJS width="150" height="150" />} />
+        <Card logo={<CRA width="150" height="150" />} />
+      </div>
+    </div>
+  );
+}
+
+export default Popular

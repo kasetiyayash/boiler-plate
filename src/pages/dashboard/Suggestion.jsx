@@ -35,7 +35,7 @@ const Suggestion = () => {
     >
       {({ handleSubmit, handleChange, handleBlur }) => (
         <Form onSubmit={handleSubmit}>
-          <div className="min-h-screen p-6 text-black  font-semibold">
+          <div className="min-h-screen flex flex-col justify-center align-center p-6 text-black  font-semibold">
             <div className="text-center">
               <p className="text-8xl font-bold">Suggestions</p>
               <p className="mt-8 text-3xl">Your Suggestions Really Matters</p>
