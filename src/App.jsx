@@ -1,15 +1,15 @@
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
+import Cursor from "./components/Cursor";
 import AppRoutes from "./routes/AppRoutes";
 
 const App = () => {
   return (
     <>
-      <React.StrictMode>
-        <BrowserRouter>
-          <AppRoutes />
-        </BrowserRouter>
-      </React.StrictMode>
+      <BrowserRouter>
+        
+        <AppRoutes />
+      </BrowserRouter>
     </>
   );
 };

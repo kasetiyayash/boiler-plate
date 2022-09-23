@@ -5,10 +5,10 @@ module.exports = {
       colors: {
         main: "#fcf3ea",
       },
+      fontFamily: {
+        dm: ["DM Sans"],
+      },
     },
   },
-  plugins: [require("daisyui")],
-  daisy: {
-    // theme: [""],
-  },
+  plugins: [require("tailwind-scrollbar")],
 };
