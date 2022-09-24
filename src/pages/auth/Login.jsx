@@ -82,6 +82,7 @@ const Login = () => {
                 password: values?.password,
               })
             );
+            localStorage.setItem("accessToken", "abcd");
             setFormSubmitting(true);
           }}
         >

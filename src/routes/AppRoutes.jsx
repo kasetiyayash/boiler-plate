@@ -7,6 +7,8 @@ import ProtectedRoute from "./ProtectedRoute";
 import Login from "../pages/auth/Login";
 import SignUp from "../pages/auth/SignUp";
 import Dashboard from "../pages/dashboard";
+import ReactJS from "../pages/react";
+import { AnimatePresence } from "framer-motion";
 
 const AuthRoute = () => {
   return (
@@ -21,6 +23,7 @@ const DefaultRoute = () => {
   return (
     <Routes>
       <Route path="/dashboard" element={<Dashboard />} />
+      <Route path="/react" element={<ReactJS />} />
     </Routes>
   );
 };
@@ -37,14 +40,16 @@ const AppRoutes = () => {
 
   return (
     <Suspense fallback={<LazyLoader />}>
-      <Routes>
-        <Route element={<AuthLayout />}>
-          <Route path="/auth/*" element={<AuthRoute />} />
-        </Route>
-        <Route element={<Protected />}>
-          <Route path="/*" element={<DefaultRoute />} />
-        </Route>
-      </Routes>
+      <AnimatePresence>
+        <Routes>
+          <Route element={<AuthLayout />}>
+            <Route path="/auth/*" element={<AuthRoute />} />
+          </Route>
+          <Route element={<Protected />}>
+            <Route path="/*" element={<DefaultRoute />} />
+          </Route>
+        </Routes>
+      </AnimatePresence>
     </Suspense>
   );
 };

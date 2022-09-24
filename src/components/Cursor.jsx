@@ -21,13 +21,27 @@ const Cursor = () => {
   };
 
   return (
-    <div
-      className="cursor"
-      style={{
-        left: position.x + "px",
-        top: position.y + "px",
-      }}
-    />
+    <>
+      <div
+        className="main-cursor"
+        style={{
+          left: position.x + "px",
+          top: position.y + "px",
+        }}
+      />
+      <div
+        className="cursor"
+        style={{
+          left: position.x + "px",
+          top: position.y + "px",
+        }}
+      >
+        <div className="colorOne"></div>
+        <div className="colorTwo"></div>
+        <div className="colorThree"></div>
+      </div>
+    </>
+    // </div>
   );
 };
 

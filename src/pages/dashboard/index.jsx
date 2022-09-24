@@ -19,8 +19,8 @@ const Dashboard = () => {
   // }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="min-h-screen flex flex-col items-center justify-center text-[150px] font-bold text-black">
+    <div className="flex flex-col justify-center items-center font-bold text-black">
+      <div className="min-h-screen w-full flex flex-col items-center justify-center text-5xl md:text-7xl lg:text-[6.5rem] xl:text-[150px]">
         <p>Be Lazy</p>
         <p>Be Productive</p>
       </div>

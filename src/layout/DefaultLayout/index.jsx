@@ -7,11 +7,13 @@ import PageAnimation from "../../components/PageAnimation";
 const index = () => {
   return (
     <div>
+      <Header />
       <PageAnimation>
-        <Header />
-        <Outlet />
-        {/* <Footer /> */}
+        <div className="container mx-auto">
+          <Outlet />
+        </div>
       </PageAnimation>
+      {/* <Footer /> */}
     </div>
   );
 };

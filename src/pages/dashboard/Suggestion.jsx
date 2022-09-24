@@ -37,8 +37,12 @@ const Suggestion = () => {
         <Form onSubmit={handleSubmit}>
           <div className="min-h-screen flex flex-col justify-center align-center p-6 text-black  font-semibold">
             <div className="text-center">
-              <p className="text-8xl font-bold">Suggestions</p>
-              <p className="mt-8 text-3xl">Your Suggestions Really Matters</p>
+              <p className="text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-bold">
+                Suggestions
+              </p>
+              <p className="mt-8 text-2xl md:text-3xl">
+                Your Suggestions Really Matters
+              </p>
             </div>
             <div className="mt-16 flex flex-col gap-6">
               <div>
