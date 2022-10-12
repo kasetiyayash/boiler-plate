@@ -1,5 +1,5 @@
 import React, { Suspense } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import LazyLoader from "../components/LazyLoader";
 import AuthLayout from "../layout/AuthLayout";
 import DefaultLayout from "../layout/DefaultLayout";
@@ -46,7 +46,9 @@ const AppRoutes = () => {
             <Route path="/auth/*" element={<AuthRoute />} />
           </Route>
           <Route element={<Protected />}>
+            <Route path="/" element={<Navigate to="/dashboard" />} />
             <Route path="/*" element={<DefaultRoute />} />
+            {/* </Route> */}
           </Route>
         </Routes>
       </AnimatePresence>
