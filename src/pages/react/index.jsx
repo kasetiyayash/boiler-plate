@@ -1,34 +1,39 @@
-import React from 'react'
+import React from "react";
 import { motion } from "framer-motion";
-import { CRA, ViteJS } from '../../assets/allSvg';
-
+import {
+  Bootstrap,
+  CRA,
+  Redux,
+  TailwindCSS,
+  ViteJS,
+  Zustand,
+} from "../../assets/allSvg";
 
 const ReactJS = () => {
-
-const Card = ({ logo }) => {
-  return (
-    <motion.div
-      // onClick={() => setTimeout(() => navigate("/react"), 0)}
-      initial={{ scale: 1.5 }}
-      className="p-12 flex justify-center items-center bg-main rounded-2xl drop-shadow-md hover:drop-shadow-lg  border-black"
-      animate={{
-        scale: 1,
-        transition: { duration: 0.2 },
-      }}
-      whileHover={{
-        scale: 1.1,
-        transition: { duration: 0.2 },
-      }}
-      whileTap={{
-        scale: 5,
-        opacity: 0,
-        transition: { duration: 0.2 },
-      }}
-    >
-      {logo}
-    </motion.div>
-  );
-};
+  const Card = ({ logo }) => {
+    return (
+      <motion.div
+        // onClick={() => setTimeout(() => navigate("/react"), 0)}
+        initial={{ scale: 1.5 }}
+        className="p-12 flex justify-center items-center bg-main rounded-2xl drop-shadow-md hover:drop-shadow-lg  border-black"
+        animate={{
+          scale: 1,
+          transition: { duration: 0.2 },
+        }}
+        whileHover={{
+          scale: 1.1,
+          transition: { duration: 0.2 },
+        }}
+        whileTap={{
+          scale: 5,
+          opacity: 0,
+          transition: { duration: 0.2 },
+        }}
+      >
+        {logo}
+      </motion.div>
+    );
+  };
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-centers">
@@ -39,8 +44,12 @@ const Card = ({ logo }) => {
           <Card logo={<CRA width="150" height="150" />} />
         </div>
         <div className="flex gap-4 justify-center items-center">
-          <Card logo={<ViteJS width="150" height="150" />} />
-          <Card logo={<CRA width="150" height="150" />} />
+          <Card logo={<Redux width="150" height="150" />} />
+          <Card logo={<Zustand width="150" height="150" />} />
+        </div>
+        <div className="flex gap-4 justify-center items-center">
+          <Card logo={<Bootstrap width="150" height="150" />} />
+          <Card logo={<TailwindCSS width="150" height="150" />} />
         </div>
       </div>
     </div>
