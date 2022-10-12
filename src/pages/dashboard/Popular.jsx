@@ -11,6 +11,7 @@ import {
 } from "../../assets/allSvg";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import AnimatedText from "./components/AnimatedText";
 
 const Popular = () => {
   // const { platesData, isLoading, isError } = useSelector((store) => ({
@@ -48,9 +49,13 @@ const Popular = () => {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-centers text-center">
-      <p className="font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-8">
-        Popular Plates
-      </p>
+      <AnimatedText
+        text="Popular Plates"
+        delay={0.01}
+        duration={0.04}
+        className="font-bold text-5xl md:text-6xl lg:text-7xl xl:text-8xl mb-8"
+      />
+      {/* <p>Popular Plates</p> */}
       <div className="p-6 md:px-4 lg:p-12 grid grid-cls-2 md:grid-cols-3 xl:grid-cols-4 gap-8">
         <Card logo={<ReactJS width="150" height="150" />} />
         <Card logo={<NextJS width="150" height="150" />} />
